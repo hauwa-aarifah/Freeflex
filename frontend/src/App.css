@@ -1,0 +1,306 @@
+/* .App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */
+
+/* General App Styling */
+.App {
+  text-align: center;
+}
+
+/* Header Styling */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #000;
+  color: #fff;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #fff;
+}
+
+/* Footer Styling */
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: transparent;
+  color: #fff;
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  border-top: 1px solid #fff
+}
+
+/* Landing Page Styling */
+.landing-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  background-color: #111;
+  background-image: url('frontend/src/img/background-logo.png'); /* Adjust the path as needed */
+  background-size: 40%; /* Ensures the image covers the entire page */
+  background-repeat: no-repeat; /* Prevents tiling */
+  background-position:80vh; /* Keeps the image centred */
+  color: #fff;
+}
+
+/* Main Content */
+.main-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+/* Welcome Section */
+.welcome-section {
+  flex: 1 1 45%;
+  max-width: 45%;
+  padding: 0 2rem;
+  text-align: left;
+}
+
+.welcome-title {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.welcome-subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: #fff;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* Search Bar Styling */
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 1.5rem;
+  width: 100%; /* Adjust to fit parent container */
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 0.8rem 2.5rem 0.8rem 1rem; /* Space for the icon */
+  border-radius: 25px;
+  border: 1px solid #fff; /* Light border */
+  font-size: 1rem;
+  color: #fff; /* Light text */
+  background-color: #222; /* Dark background */
+  outline: none; /* Remove default focus outline */
+}
+
+.search-bar input::placeholder {
+  color: #bbb; /* Placeholder text colour */
+}
+
+.search-bar button {
+  position: absolute;
+  right: 10px; /* Align the button inside the input */
+  background: none; /* Remove button background */
+  border: none; /* Remove button border */
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-bar button img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Gallery Container */
+.gallery-container {
+  width: 100%;
+  max-width: 600px; /* Adjust width as needed */
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: transparent;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* Gallery Slide */
+.gallery-slide {
+  position: relative; /* Allows positioning of the caption relative to the image */
+  display: flex; /* Enables flexbox for alignment */
+  flex-direction: column; /* Aligns the image and caption vertically */
+  justify-content: flex-start; /* Ensures consistent vertical alignment */
+  align-items: center; /* Centers content horizontally */
+  padding: 1rem; /* Adds space around the image and caption */
+}
+
+/* Gallery Images */
+.gallery-image {
+  width: 80%; /* Set image size */
+  max-height: 300px; /* Limits the height of the image */
+  border-radius: 10px; /* Smooth edges */
+  object-fit: contain; /* Ensures the image is fully visible and not cropped */
+  display: block; /* Ensures proper layout */
+}
+
+/* Caption Styling */
+.gallery-caption {
+  font-size: 1.5rem; /* Adjusted font size */
+  color: #DEFE7F; /* Caption colour */
+  font-weight: bold; /* Ensures caption stands out */
+  text-align: center; /* Centers the caption text */
+  margin-top: 1rem; /* Adds space between the image and caption */
+  width: 80%; /* Matches the width of the image for consistency */
+}
+
+
+/* Button Styling */
+/* General Button Styling */
+button {
+  font-size: 16px;
+  position: relative;
+  padding: 0.8em 2em;
+  border: none;
+  border-radius: 25px;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+button span {
+  font-weight:normal;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Get Started Button */
+.get-started {
+  background: #fff;
+  color: #111;
+}
+
+.get-started span {
+  color: #111;
+}
+
+.get-started:hover {
+  background: #f2f2f2;
+}
+
+/* Log In Button */
+.log-in {
+  background: #111;
+  color: #fff;
+  border: 0px solid #fff;
+}
+
+.log-in span {
+  color: #fff;
+}
+
+.log-in:hover {
+  background: #333;
+}
+
+
+button .border {
+  position: absolute;
+  border: 2px solid #fff;
+  border-radius: 25px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease-in-out;
+  display: block;
+}
+
+button:hover .border {
+  width: 110%;
+  height: 120%;
+}
+
+.full-rounded {
+  border-radius: 2em;
+}
+
+/* Background Image Styling */
+body {
+  background-image: url('./img/background-logo.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  background-color: #111;
+  font-family: 'Poppins', sans-serif; /* Set Poppins as the default font */
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+* {
+  font-family: inherit; /* Inherits font-family from the body */
+  box-sizing: border-box; /* Ensures consistent box model behavior */
+}
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
