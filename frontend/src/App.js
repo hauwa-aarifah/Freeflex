@@ -27,10 +27,10 @@
 
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import WelcomeMessage from './components/WelcomeMessage';
-import SearchBar from './components/SearchBar';
-import Footer from './components/Footer';
+// import Header from './components/Header';
+// import WelcomeMessage from './components/WelcomeMessage';
+// import SearchBar from './components/SearchBar';
+// import Footer from './components/Footer';
 import LandingPage from './pages/LandingPage';
 import GetStarted from './pages/GetStarted';
 import KeyMetrics from './pages/KeyMetrics';
@@ -38,7 +38,7 @@ import SkillMap from './pages/SkillMap';
 import Dashboard from './pages/Dashboard';
 import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
-import backgroundLogo from './img/background-logo.png';
+// import backgroundLogo from './img/background-logo.png';
 import './App.css';
 
 

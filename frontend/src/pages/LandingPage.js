@@ -2,10 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header'; // Adjust the path if needed
 import Footer from '../components/Footer'; // Adjust the path if needed
-import WelcomeMessage from '../components/WelcomeMessage'; // Adjust the path if needed
 import SearchBar from '../components/SearchBar'; // Adjust the path if needed
 import Gallery from '../components/Gallery';
-import freeflexLogo from '../img/freeflex-logo.png'; // Adjust the path if needed
 
 const LandingPage = () => {
   return (

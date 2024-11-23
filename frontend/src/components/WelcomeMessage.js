@@ -5,14 +5,12 @@ const WelcomeMessage = () => {
     <div className="welcome">
       <h1>Welcome.</h1>
       <p>Find the best freelancers</p>
+      <div className="buttons">
+        <button className="btn get-started">Get Started</button>
+        <button className="btn login">Log In</button>
+      </div>
     </div>
   );
 };
-
-<div className="buttons">
-  <button className="btn get-started">Get Started</button>
-  <button className="btn login">Log In</button>
-</div>
-
 
 export default WelcomeMessage;
