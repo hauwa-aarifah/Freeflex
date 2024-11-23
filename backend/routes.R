@@ -18,3 +18,23 @@ function() {
 function() {
   list(message = "Hello from the API!")
 }
+
+# Single @post /submit route
+#* @post /submit
+#* @param data:object
+#* @serializer json
+function(req) {
+  # Parse the JSON data from the frontend
+  data <- jsonlite::fromJSON(req$postBody)
+  print("Received data:")
+  print(data)
+
+  # Simulate a backend process
+  response <- list(
+    message = "Data received successfully",
+    status = "success",
+    receivedData = data
+  )
+
+  return(response)
+}
