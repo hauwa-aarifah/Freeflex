@@ -79,6 +79,17 @@
   border-top: 1px solid #fff
 }
 
+/* FooterV2 Styling */
+.footer-v2 {
+  text-align: right; /* Align content to the right */
+  padding: 1rem 2rem; /* Add padding for spacing */
+  background-color: transparent; /* Transparent background */
+  color: #fff; /* White text color */
+  margin-top: 2rem; /* Add spacing above the footer */
+  border: none; /* Remove any borders */
+  font-size: 0.8rem; /* Adjust the font size if needed */
+}
+
 /* Landing Page Styling */
 .landing-page {
   display: flex;

@@ -22,7 +22,7 @@ const LandingPage = () => {
 
           {/* Buttons */}
           <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem' }}>
-            <Link to="/get-started">
+            <Link to="/get-started/step1">
               <button className="full-rounded get-started">
                 <span>Get Started</span>
                 <div className="border full-rounded"></div>
