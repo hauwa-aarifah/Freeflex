@@ -86,7 +86,7 @@
   justify-content: space-between;
   min-height: 100vh;
   background-color: #111;
-  background-image: url('frontend/src/img/background-logo.png'); /* Adjust the path as needed */
+  background-image: url('/src/img/background-logo.png'); /* Adjust the path as needed */
   background-size: 40%; /* Ensures the image covers the entire page */
   background-repeat: no-repeat; /* Prevents tiling */
   background-position:80vh; /* Keeps the image centred */
