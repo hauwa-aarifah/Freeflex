@@ -1,5 +1,23 @@
-#* @apiTitle Freeflex API
-#* @apiDescription Backend API for the Freeflex App
+# Load necessary library
+library(plumber)
+
+#* @filter cors
+function(req, res) {
+  # Handle preflight OPTIONS request
+  if (req$REQUEST_METHOD == "OPTIONS") {
+    res$setHeader("Access-Control-Allow-Origin", "http://localhost:3000")
+    res$setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
+    res$setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization")
+    res$status <- 200
+    return(list())
+  }
+  
+  # Handle actual request
+  res$setHeader("Access-Control-Allow-Origin", "http://localhost:3000")
+  res$setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
+  res$setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization")
+  plumber::forward()
+}
 
 # Base route
 #* @get /
@@ -13,28 +31,44 @@ function() {
   list(status = "API is running", version = "1.0.0")
 }
 
-# Example route
-#* @get /example
-function() {
-  list(message = "Hello from the API!")
-}
-
-# Single @post /submit route
+# Submit data route
 #* @post /submit
-#* @param data:object
 #* @serializer json
-function(req) {
-  # Parse the JSON data from the frontend
-  data <- jsonlite::fromJSON(req$postBody)
-  print("Received data:")
-  print(data)
+function(req, res) {
+  tryCatch({
+    # Check if request body exists
+    if (is.null(req$postBody) || req$postBody == "") {
+      res$status <- 400
+      return(list(
+        message = "No data received",
+        status = "error"
+      ))
+    }
 
-  # Simulate a backend process
-  response <- list(
-    message = "Data received successfully",
-    status = "success",
-    receivedData = data
-  )
+    # Parse JSON data from the request body
+    data <- jsonlite::fromJSON(req$postBody)
 
-  return(response)
+    # Log the received data
+    print("Received data:")
+    print(data)
+
+    # Return success response
+    res$status <- 200
+    return(list(
+      message = "Data received successfully",
+      status = "success",
+      receivedData = data
+    ))
+  }, error = function(e) {
+    # Log error
+    print(paste("Error:", e$message))
+    
+    # Return error response
+    res$status <- 400
+    return(list(
+      message = "Error processing the request",
+      status = "error",
+      details = e$message
+    ))
+  })
 }
