@@ -1,3 +1,4 @@
+// src/components/FormSteps/Step5.js
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import HeaderV2 from "../HeaderV2";
@@ -6,8 +7,8 @@ import backIcon from "../../img/back-icon.png";
 import backgroundLogo from "../../img/background-logo.png";
 import freeflexLogo from "../../img/freeflex-logo.png";
 
-const Step5 = ({ onNext, onBack }) => {
-  const [inputData, setInputData] = useState({
+const Step5 = ({ onNext, onBack, initialData = {} }) => {
+  const [inputData, setInputData] = useState(initialData || {
     locationPreference: "",
     workingHours: "",
   });
@@ -16,11 +17,30 @@ const Step5 = ({ onNext, onBack }) => {
 
   useEffect(() => {
     setProgress(100); // Progress is 100% for Step 5
+    
+    // Load saved data if available
+    const savedData = localStorage.getItem('formData');
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      if (parsedData.step5Data) {
+        setInputData(parsedData.step5Data);
+      }
+    }
   }, []);
 
   const handleFinish = () => {
     if (inputData.locationPreference && inputData.workingHours) {
-      onNext(inputData); // Pass the final input data to the parent component
+      // Save final step data
+      const savedData = JSON.parse(localStorage.getItem('formData') || '{}');
+      const finalData = {
+        ...savedData,
+        step5Data: inputData
+      };
+      
+      localStorage.setItem('formData', JSON.stringify(finalData));
+      localStorage.setItem('lastStep', 'complete');
+      
+      onNext(inputData);
     } else {
       alert("Please select your location and working hours preferences.");
     }
