@@ -8,7 +8,7 @@ fnCountryPercentage <- function(jobs_data) {
   
   # Check if the country column exists
   if (!country_column %in% colnames(jobs_data)) {
-    stop(paste("The column", country_column, "does not exist in the CSV file."))
+    country_column = "country"
   }
   
   # Calculate relative counts
