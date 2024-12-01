@@ -39,3 +39,7 @@ fnVisualizeHourlyDistribution(developerJobsData)
 ## Plot job demand
 source("UtilityFunctions/fnPlotJobDemandOverTime.R")
 jobs_demand <- fnPlotJobDemandOverTime(developerJobsData, time_interval = "week")
+
+## Forecasting
+source("UtilityFunctions/fnForecastJobDemand.R")
+forecastJobs <- fnForecastJobDemand(jobs_data = developerJobsData, time_interval = "week")
