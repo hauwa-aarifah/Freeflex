@@ -30,6 +30,7 @@ XP_range <- fnAveragePriceRange(filtered_data = XP_data)
 ### Testing the big dataset
 alljobs_data <- read.csv('Data/All_Upwork_Jobs_Cleaned_Stage2.csv', stringsAsFactors = FALSE)
 developerJobsData <- fnFlexiFilterJobData(jobs_data = alljobs_data, filter_criteria = list(Category = "Developer"))
+devJobsByCountry <- fnCountryPercentage(jobs_data = developerJobsData)
 source("UtilityFunctions/fnGetHourlyPostingDistribution.R")
 source("UtilityFunctions/fnVisualizeHourlyDistribution.R")
 
