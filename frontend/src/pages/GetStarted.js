@@ -13,6 +13,8 @@ import Dashboard from './Dashboard';
 
 const GetStarted = () => {
   const { isLoggedIn, isGuest, user, loginAsGuest } = useAuth();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     step2Data: {},
     step3Data: {},
@@ -20,212 +22,185 @@ const GetStarted = () => {
     step5Data: {},
   });
 
-  const navigate = useNavigate();
-
-  // Load saved form data from localStorage if it exists
   useEffect(() => {
-    // Check for existing form data
-    const savedFormData = localStorage.getItem('formData');
-    if (savedFormData) {
-      setFormData(JSON.parse(savedFormData));
-    }
-    
-    // If user is guest, load their saved data
-    if (isGuest && user?.formData) {
-      setFormData(user.formData);
-    }
+    const loadSavedData = () => {
+      if (isGuest && user?.formData) {
+        setFormData(user.formData);
+      } else {
+        const savedData = localStorage.getItem('formData');
+        if (savedData) {
+          try {
+            const parsedData = JSON.parse(savedData);
+            console.log('Loaded saved data:', parsedData);
+            setFormData(parsedData);
+          } catch (error) {
+            console.error('Error loading saved data:', error);
+            localStorage.removeItem('formData');
+          }
+        }
+      }
+    };
+
+    loadSavedData();
   }, [isGuest, user]);
 
-  // Update the form data as users progress through steps
   const handleDataUpdate = (step, data) => {
-    setFormData((prevData) => {
-      const updatedData = { ...prevData, [step]: data };
-      // Save to localStorage only if not guest
+    console.log(`Updating ${step} with data:`, data);
+    setFormData(prevData => {
+      const updatedData = {
+        ...prevData,
+        [step]: data
+      };
+
       if (!isGuest) {
         localStorage.setItem('formData', JSON.stringify(updatedData));
       }
-      console.log(`Updated FormData after ${step}:`, updatedData);
+
+      console.log('Updated form data:', updatedData);
       return updatedData;
     });
   };
 
-  // Submit form data to the backend
   const handleSubmit = async () => {
     try {
-      // Prepare data for submission
+      console.log('Preparing to submit form data:', formData);
+
       const submissionData = {
         ...formData,
         userId: isLoggedIn ? user.id : null,
         userType: isLoggedIn ? 'registered' : 'guest'
       };
 
+      console.log('Submitting data to backend:', submissionData);
+
       const response = await axios.post('http://localhost:8000/submit', submissionData);
+      console.log('Backend response:', response.data);
 
-      console.log('Response from backend:', response.data);
-
-      // If user is not logged in, create guest session
       if (!isLoggedIn && !isGuest) {
         loginAsGuest({
-          formData: formData,
+          formData: submissionData,
           submissionId: response.data.submissionId || null
         });
       }
 
-      // Clear form data from localStorage if user is registered
       if (isLoggedIn) {
         localStorage.removeItem('formData');
       }
 
-      // Navigate to dashboard with response data
-      navigate('/dashboard', { 
-        state: { 
-          formData, 
-          backendResponse: response.data 
-        } 
+      navigate('/dashboard', {
+        state: {
+          formData: submissionData,
+          backendResponse: response.data
+        }
       });
 
     } catch (error) {
-      console.error('Error submitting data:', error);
-      alert('Failed to submit data to the backend. Please try again.');
+      console.error('Submission error:', error);
+      alert('Failed to submit data. Please try again.');
     }
-  };
-
-  // Save progress before leaving
-  const handleBack = (step) => {
-    if (!isGuest) {
-      localStorage.setItem('lastStep', step);
-    }
-    navigate(`/get-started/${step}`);
-  };
-
-  // Check if user has existing session
-  const getInitialStep = () => {
-    if (isGuest && user?.formData) {
-      return '/dashboard';
-    }
-    return localStorage.getItem('lastStep') || "/get-started/step1";
   };
 
   return (
     <div className="get-started">
       <Routes>
-        {/* Redirect base route to appropriate step */}
-        <Route 
-          path="/" 
-          element={<Navigate to={getInitialStep()} replace />}
-        />
-
-        {/* Step1: Overview */}
+        <Route path="/" element={<Navigate to="/get-started/step1" replace />} />
+        
         <Route
           path="/step1"
           element={
             <Step1 
-              onNext={() => {
-                if (!isGuest) {
-                  localStorage.setItem('lastStep', 'step2');
-                }
-                navigate('/get-started/step2');
-              }}
-              formData={formData}
+              onNext={() => navigate('/get-started/step2')}
             />
           }
         />
 
-        {/* Step2: Collect industry and country */}
         <Route
           path="/step2"
           element={
             <Step2
               onNext={(data) => {
+                console.log('Step 2 data:', data);
                 handleDataUpdate('step2Data', data);
-                if (!isGuest) {
-                  localStorage.setItem('lastStep', 'step3');
-                }
                 navigate('/get-started/step3');
               }}
-              onBack={() => handleBack('step1')}
+              onBack={() => navigate('/get-started/step1')}
               initialData={formData.step2Data}
             />
           }
         />
 
-        {/* Step3: Collect skills and experience */}
         <Route
           path="/step3"
           element={
             <Step3
               onNext={(data) => {
+                console.log('Step 3 data:', data);
                 handleDataUpdate('step3Data', data);
-                if (!isGuest) {
-                  localStorage.setItem('lastStep', 'step4');
-                }
                 navigate('/get-started/step4');
               }}
-              onBack={() => handleBack('step2')}
+              onBack={() => navigate('/get-started/step2')}
               initialData={formData.step3Data}
-              selectedIndustry={formData.step2Data.industry || ''}
+              selectedIndustry={formData.step2Data?.industry || ''}
             />
           }
         />
 
-        {/* Step4: Collect estimated hours */}
         <Route
           path="/step4"
           element={
             <Step4
               onNext={(data) => {
+                console.log('Step 4 data:', data);
                 handleDataUpdate('step4Data', data);
-                if (!isGuest) {
-                  localStorage.setItem('lastStep', 'step5');
-                }
                 navigate('/get-started/step5');
               }}
-              onBack={() => handleBack('step3')}
+              onBack={() => navigate('/get-started/step3')}
               initialData={formData.step4Data}
             />
           }
         />
 
-        {/* Step5: Collect location and working hours */}
         <Route
           path="/step5"
           element={
             <Step5
               onNext={(data) => {
+                console.log('Step 5 data:', data);
                 handleDataUpdate('step5Data', data);
                 handleSubmit();
               }}
-              onBack={() => handleBack('step4')}
+              onBack={() => navigate('/get-started/step4')}
               initialData={formData.step5Data}
             />
           }
         />
 
-        {/* Dashboard: Display collected and backend data */}
-        <Route 
-          path="/dashboard" 
+        <Route
+          path="/dashboard"
           element={
             <Dashboard 
-              key={user?.id || 'guest'} // Force re-render on user change
+              key={user?.id || 'guest'}
             />
-          } 
+          }
         />
       </Routes>
 
-      {/* Optional: Add a banner for guest users */}
       {isGuest && (
-        <div style={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          padding: '1rem',
-          backgroundColor: 'rgba(222, 254, 127, 0.1)',
-          textAlign: 'center',
-          color: '#fff'
-        }}>
+        <div 
+          style={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            padding: '1rem',
+            backgroundColor: 'rgba(222, 254, 127, 0.1)',
+            textAlign: 'center',
+            color: '#fff',
+            zIndex: 1000
+          }}
+        >
           <p>
-            You're using FreeFlex as a guest. 
+            You're using FreeFlex as a guest.
             <button
               onClick={() => navigate('/login')}
               style={{
