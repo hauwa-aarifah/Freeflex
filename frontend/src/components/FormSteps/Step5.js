@@ -18,14 +18,21 @@ const Step5 = ({ onNext, onBack }) => {
     setProgress(100); // Progress is 100% for Step 5
   }, []);
 
-  const handleFinish = () => {
+  // const handleNext = () => {
+  //   if (inputData.locationPreference && inputData.workingHours) {
+  //     onNext(inputData); // Pass the final input data to the parent component
+  //   } else {
+  //     alert("Please select your location and working hours preferences.");
+  //   }
+  // };
+  const handleNext = () => {
     if (inputData.locationPreference && inputData.workingHours) {
+      console.log("Step5 inputData:", inputData); // Debug the data
       onNext(inputData); // Pass the final input data to the parent component
     } else {
       alert("Please select your location and working hours preferences.");
     }
   };
-
   const locationOptions = [
     "Remote (Any Location)",
     "Local (Same Country)",
@@ -202,7 +209,7 @@ const Step5 = ({ onNext, onBack }) => {
         </button>
 
         <button
-          onClick={handleFinish}
+          onClick={handleNext}
           style={{
             padding: "0 2rem",
             height: "50px",
