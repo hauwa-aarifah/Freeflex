@@ -1,8 +1,7 @@
-fnGetOptimalPostingTimeLocal <- function(optimalPostingHour, timeZone = "UTC")
-  
+fnGetOptimalPostingTimeLocal <- function(optimalPostingHour, timeZone = "UTC") {
   # Load lubridate
   library(lubridate)
-
+  
   # Get todays date
   dateToday <- Sys.Date()
   
@@ -15,5 +14,4 @@ fnGetOptimalPostingTimeLocal <- function(optimalPostingHour, timeZone = "UTC")
   localTime <- format(localDate, format = "%H:%M:%S %Z" )
   
   return(localTime)
-  
-  
+}
