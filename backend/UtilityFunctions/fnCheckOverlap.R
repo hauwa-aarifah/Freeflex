@@ -1,12 +1,11 @@
-fnCheckOverlap <- function(price_ranges)
-  
+fnCheckOverlap <- function(price_ranges) {
   # Initialize a 6x2 matrix with all FALSE values
   overlapCheckMatrix <- matrix(FALSE, nrow = 6, ncol = 2)
-
+  
   range_contains_value <- function(value, outer_range) {
     return(outer_range[1] < value && outer_range[2] > value)
   }
-
+  
   overlapCheckMatrix[1,1] <- range_contains_value(price_ranges$`Entry level`$Average_Min_Price, price_ranges$`Intermediate`)
   overlapCheckMatrix[1,2] <- range_contains_value(price_ranges$`Entry level`$Average_Max_Price, price_ranges$`Intermediate`)
   overlapCheckMatrix[2,1] <- range_contains_value(price_ranges$`Entry level`$Average_Min_Price, price_ranges$`Expert`)
@@ -29,5 +28,8 @@ fnCheckOverlap <- function(price_ranges)
   withinMatrix <- matrix(apply(overlapCheckMatrix, 1, all), nrow = 6, ncol = 1)
   
   # Display the result
-  print(result_matrix)
+  return(overlapCheckMatrix)
+}
+  
+  
   
